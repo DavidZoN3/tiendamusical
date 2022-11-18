@@ -85,6 +85,6 @@
 	<!-- ::::::::::::::::ETIQUETA QUE PERMITE REGISTRAR LAS CLASES QUE SE ENCARGAN 
 		DE EJECUTAR LAS TRANSACCIONES A LA BASE DE DATOS (DAO)::::::::::: -->
 	<jpa:repositories
-		base-package="mx.com.americancotton.tiendamusicaldata.repositories"
-		entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
+		base-package="mx.com.americancotton.tiendamusicaldata.dao"
+		entity-manager-factory-ref="emf"></jpa:repositories>
 </beans>
