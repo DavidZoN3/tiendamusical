@@ -3,6 +3,8 @@
  */
 package mx.com.americancotton.tiendamusicalweb.controllers;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -11,6 +13,7 @@ import javax.faces.bean.ViewScoped;
 
 import mx.com.americancotton.tiendamusicalentities.entities.Persona;
 import mx.com.americancotton.tiendamusicalservices.service.LoginService;
+import mx.com.americancotton.tiendamusicalweb.session.SessionBean;
 import mx.com.americancotton.tiendamusicalweb.utils.CommonUtils;
 
 /**
@@ -36,6 +39,9 @@ public class LoginController {
 	 */
 	@ManagedProperty("#{loginServiceImpl}")
 	private LoginService loginServiceImpl;
+	
+	@ManagedProperty("#{sessionBean}")
+	private SessionBean sessionBean;
 
 	@PostConstruct
 	public void init() {
@@ -50,7 +56,16 @@ public class LoginController {
 		Persona personaConsultada = this.loginServiceImpl.consultarUsuarioLogin(this.usuario, this.password);		
 		
 		if (personaConsultada != null) {
-			CommonUtils.mostrarMensaje(FacesMessage.SEVERITY_INFO, "Exitoso!", "Bienvenido al home");
+//			CommonUtils.mostrarMensaje(FacesMessage.SEVERITY_INFO, "Exitoso!", "Bienvenido al home");
+			try {
+				this.sessionBean.setPersona(personaConsultada);
+				
+				CommonUtils.redireccionar("/pages/commons/dashboard.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				CommonUtils.mostrarMensaje(FacesMessage.SEVERITY_FATAL, "Error!", "Formato incorrecto en el cual se ingresa a la pantalla deseada.");
+			}
 		}else {
 			CommonUtils.mostrarMensaje(FacesMessage.SEVERITY_ERROR, "Error!", "El usuario y/o contraseña son incorrectos");
 		}
@@ -96,5 +111,19 @@ public class LoginController {
 	 */
 	public void setLoginServiceImpl(LoginService loginServiceImpl) {
 		this.loginServiceImpl = loginServiceImpl;
+	}
+
+	/**
+	 * @return the sessionBean
+	 */
+	public SessionBean getSessionBean() {
+		return sessionBean;
+	}
+
+	/**
+	 * @param sessionBean the sessionBean to set
+	 */
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
 	}
 }
