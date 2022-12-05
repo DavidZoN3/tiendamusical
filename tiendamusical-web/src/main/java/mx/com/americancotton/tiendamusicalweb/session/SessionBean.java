@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import mx.com.americancotton.tiendamusicalentities.dto.ArtistaAlbumDTO;
 import mx.com.americancotton.tiendamusicalentities.entities.Persona;
 
 /**
@@ -22,6 +23,11 @@ public class SessionBean {
 	 * Objeto persona que se mantendra en la session
 	 */
 	private Persona persona;
+	
+	/**
+	 * Objeto que contendra la informacion del detalle del album seleccionado por el cliente
+	 */
+	private ArtistaAlbumDTO artistaAlbumDTO;
 	
 	@PostConstruct
 	public void init() {
@@ -40,5 +46,19 @@ public class SessionBean {
 	 */
 	public void setPersona(Persona persona) {
 		this.persona = persona;
+	}
+
+	/**
+	 * @return the albumDTO
+	 */
+	public ArtistaAlbumDTO getArtistaAlbumDTO() {
+		return artistaAlbumDTO;
+	}
+
+	/**
+	 * @param albumDTO the albumDTO to set
+	 */
+	public void setArtistaAlbumDTO(ArtistaAlbumDTO artistaAlbumDTO) {
+		this.artistaAlbumDTO = artistaAlbumDTO;
 	}
 }
